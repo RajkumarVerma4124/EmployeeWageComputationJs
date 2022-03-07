@@ -8,25 +8,34 @@ const PART_TIME = 1;
 const FULL_TIME = 2;
 const PART_TIME_HOURS = 4;
 const FULL_TIME_HOURS = 8;
-//Genrating random value either 0 or 1
-let empCheck = Math.floor(Math.random() * 10) % 3;
+const NUM_OF_WORKING_DAYS = 20;
+
+//Genrating random values
+let empCheck = Math.floor(Math.random() * 10) % 2;
 //Checking whether an employee is present or not(UC1)
 console.log((IS_ABSENT == empCheck) ? "Employee Is Absent" : "Employee Is Present")
 
-//Calculating daily employee wage and ref using function to check whether emp is present fulltime or parttime(UC2 && UC3)
-function getWorkingHours(empCheck) {
+//Calculating wages for a month of an employee(UC4)
+let totalWage = 0;
+dailyEmpHrs = 0;
+for (let day = 1; day <= NUM_OF_WORKING_DAYS; day++) {
+    //Calculating daily employee wage and ref using function to check whether emp is present fulltime or parttime(UC2 && UC3)
+    function getWorkingHours(empDailyCheck) {
+        switch (empDailyCheck) {
+            case PART_TIME:
+                return PART_TIME_HOURS;
+            case FULL_TIME:
+                return FULL_TIME_HOURS;
+            default:
+                return 0;
+        }
+    }
     //Initializing array with emp daily check
     let employees = ["Absent", "Part Time", "Full time"]
-    console.log("Today Employee Is : " + employees[empCheck]);
-    switch (empCheck) {
-        case PART_TIME:
-            return PART_TIME_HOURS;
-        case FULL_TIME:
-            return FULL_TIME_HOURS;
-        default:
-            return 0;
-    }
+    let empDailyCheck = Math.floor(Math.random() * 10) % 3;
+    dailyEmpHrs = getWorkingHours(empDailyCheck);
+    let dailyEmpWage = dailyEmpHrs * WAGE_PER_HOUR;
+    totalWage += dailyEmpWage;
+    console.log("Day: " + day + "\tToday Employee Is: " + employees[empDailyCheck] + "\tDailyWage: " + dailyEmpWage);
 }
-let empHours = getWorkingHours(empCheck);
-let empWage = empHours * WAGE_PER_HOUR;
-console.log("Employee Today's Wage Is : " + empWage);
+console.log("\nEmployee Total Wage Per Month is : " + totalWage)
