@@ -10,7 +10,9 @@ const PART_TIME_HOURS = 4;
 const FULL_TIME_HOURS = 8;
 const NUM_OF_WORKING_DAYS = 20;
 const TOTAL_WORK_HOURS = 160;
-let totalWage = 0,dailyEmpHrs = 0,day = 1,hours = 0;
+let totalWage = 0,dailyEmpHrs = 0,day = 0,hours = 0;
+let dailyWageEmp = new Array();
+let totalWageEmp = new Array();
 
 //Genrating random values
 let empCheck = Math.floor(Math.random() * 10) % 2;
@@ -29,16 +31,26 @@ function getWorkingHours(empDailyCheck) {
     }
 }
 
+//Calculating the daily wage according the daily hours(UC6)
+function calcDailyWage(empHours){
+    return empHours * WAGE_PER_HOUR;
+}
+
 //Calculate Wages till a condition of total working hours of 160 or max days of 20 is reached for a month(UC4 && UC5)
-while (day <= NUM_OF_WORKING_DAYS && hours <= TOTAL_WORK_HOURS) {
+while (day < NUM_OF_WORKING_DAYS && hours <= TOTAL_WORK_HOURS) {
     //Initializing array with emp daily check
     let employees = ["Absent", "Part Time", "Full time"]
     let empDailyCheck = Math.floor(Math.random() * 10) % 3;
     dailyEmpHrs = getWorkingHours(empDailyCheck);
-    let dailyEmpWage = dailyEmpHrs * WAGE_PER_HOUR;
+    let dailyEmpWage = calcDailyWage(dailyEmpHrs);
     totalWage += dailyEmpWage;
+    //Storing the daily wage along with total wage(UC6)
+    totalWageEmp.push(totalWage);
+    dailyWageEmp.push(dailyEmpWage);
     hours += dailyEmpHrs;
-    console.log("Day: " + day + "\tToday Employee Is:" + employees[empDailyCheck] + "\tEmp Total Work Hours: " + hours + " \tDailyWage:" + dailyEmpWage);
     day++;
+    console.log("Day: " + day + "\tToday Employee Is:" + employees[empDailyCheck] + "\tEmp Total Work Hours: " + hours + " \tDailyWage: " + dailyWageEmp[day-1]+"\tTotal Emp Wage : "+totalWageEmp[day-1]);
 }
-console.log("\nEmployee Total Wage For This Month is : " + totalWage)
+console.log("\nTotal Working Days : "+day+"\nTotal Hours : "+hours+"\nTotal Emp Wage : " + calcDailyWage(hours));
+console.log("Daily Emp Wage Using Array : "+dailyWageEmp.join(" "));
+console.log("Total Emp Wage Using Array : "+totalWageEmp.join(" "));
