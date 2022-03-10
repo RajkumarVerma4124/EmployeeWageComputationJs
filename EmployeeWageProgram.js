@@ -17,6 +17,7 @@ let dailyWageEmpArr = new Array();
 let totalWageEmpArr = new Array();
 let empDailyWageMap = new Map();
 let empDayAndHoursArr = new Map();
+let empDayWageAndHoursObjArr = new Array();
 
 //Genrating random values
 let empCheck = Math.floor(Math.random() * 10) % 2;
@@ -55,6 +56,15 @@ while (days < NUM_OF_WORKING_DAYS && hours <= TOTAL_WORK_HOURS) {
     empDailyWageMap.set(days, calcDailyWage(getWorkingHours(empDailyCheck)));
     //Storing the day and daily hours using map(UC9) 
     empDayAndHoursArr.set(days, getWorkingHours(empDailyCheck));
+    //Storing the day and daily hours and wages in object(UC10) 
+    empDayWageAndHoursObjArr.push({
+        dayNum: days,
+        dailyHours: getWorkingHours(empDailyCheck),
+        dailyWage: calcDailyWage(getWorkingHours(empDailyCheck)),
+        toString() {
+            return `Day: ${this.dayNum}  \tTodays Working Hours : ${this.dailyHours} \tToday's Wage : ${this.dailyWage}\n`;
+        }
+    });
     console.log("Day: " + days + "\tTodays Employee Is:" + employees[empDailyCheck] + "\tEmp Total Work Hours: " + hours + " \tDailyWage: " + dailyWageEmpArr[days - 1] + "\tTotal Emp Wage : " + totalWageEmpArr[days - 1]);
 }
 console.log("\nTotal Working Days : " + days + "\nTotal Hours : " + hours + "\nTotal Emp Wage : " + calcDailyWage(hours));
@@ -143,3 +153,6 @@ empDayAndHoursArr.forEach((value, key, map) => {
 console.log("Full Time Working Days " + fullTimeWorkingDays.join(" : "));
 console.log("Part time work Days : " + partTimeWorkingDays.join(" : "));
 console.log("Non Working Days : " + nonWorkingDays.join(" : "));
+
+//Showing Daily Hours Worked And There Wage Using Array Of Objects(UC10)
+console.log(`Showing Daily Hours Worked And There Wage Using Array Of Objects : \n${empDayWageAndHoursObjArr.join("")}`);
