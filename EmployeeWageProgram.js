@@ -16,6 +16,7 @@ let totalWage = 0,
 let dailyWageEmpArr = new Array();
 let totalWageEmpArr = new Array();
 let empDailyWageMap = new Map();
+let empDayAndHoursArr = new Map();
 
 //Genrating random values
 let empCheck = Math.floor(Math.random() * 10) % 2;
@@ -51,7 +52,9 @@ while (days < NUM_OF_WORKING_DAYS && hours <= TOTAL_WORK_HOURS) {
     hours += getWorkingHours(empDailyCheck);
     days++;
     //Storing the day and daily wage using map(UC8) 
-    empDailyWageMap.set(days, calcDailyWage(getWorkingHours(empDailyCheck)))
+    empDailyWageMap.set(days, calcDailyWage(getWorkingHours(empDailyCheck)));
+    //Storing the day and daily hours using map(UC9) 
+    empDayAndHoursArr.set(days, getWorkingHours(empDailyCheck));
     console.log("Day: " + days + "\tTodays Employee Is:" + employees[empDailyCheck] + "\tEmp Total Work Hours: " + hours + " \tDailyWage: " + dailyWageEmpArr[days - 1] + "\tTotal Emp Wage : " + totalWageEmpArr[days - 1]);
 }
 console.log("\nTotal Working Days : " + days + "\nTotal Hours : " + hours + "\nTotal Emp Wage : " + calcDailyWage(hours));
@@ -118,3 +121,25 @@ for (let [key, value] of empDailyWageMap) {
     console.log("Day : " + key + " \tTodays 's Wage  " + value);
 }
 console.log("Total Employee Wage Using Map : " + Array.from(empDailyWageMap.values()).reduce(totalWageUsingReduce, 0));
+
+//Using Arrow Functions(UC9)
+let totalHoursUsingMap = Array.from(empDayAndHoursArr.values()).reduce(totalWageUsingReduce, 0)
+let totalWageOfEmpUsingArrow = (dailyWageEmpArr.filter(dailyWage => dailyWage > 0)).reduce(totalWageUsingReduce, 0);
+//Using arrow function to find emp total hours and there total wage(UC9a)
+console.log("\nUsed Arrow Function : \nEmpoyee Total hours : " + totalHoursUsingMap + "\nEmpoyee Total Wage: " + totalWageOfEmpUsingArrow);
+//Show fulltime, parttime and absent days of employee using arrow function(UC9b)
+console.log("\nShowing Fulltime, Parttime And Absent Days Of Employee Below : ");
+let nonWorkingDays = new Array();
+let partTimeWorkingDays = new Array();
+let fullTimeWorkingDays = new Array();
+empDayAndHoursArr.forEach((value, key, map) => {
+    if (value == 8)
+        fullTimeWorkingDays.push(key);
+    else if (value == 4)
+        partTimeWorkingDays.push(key);
+    else
+        nonWorkingDays.push(key);
+})
+console.log("Full Time Working Days " + fullTimeWorkingDays.join(" : "));
+console.log("Part time work Days : " + partTimeWorkingDays.join(" : "));
+console.log("Non Working Days : " + nonWorkingDays.join(" : "));
