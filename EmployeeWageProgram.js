@@ -75,9 +75,9 @@ console.log("Total Emp Wage Using Array : " + totalWageEmpArr.join(" "));
 //Iterate array using helper function foreach traversal or reduce method(UC7a)
 console.log("\nIterate Array Using Helper Function Foreach Or Reduce");
 let totalEmpWage = 0;
-//Lambda function to sum up total wage and daily wage using foreach
+//Arrow function to sum up total wage and daily wage using foreach
 let sumWages = (dailyWage) => totalEmpWage += dailyWage;
-//Lamda function to calculate total wage with current wage using reduce
+//Arrow function to calculate total wage with current wage using reduce
 let totalWageUsingReduce = (totalWage, dailyWage) => totalWage + dailyWage;
 //Foreach to traverse the array and print total wage
 dailyWageEmpArr.forEach(sumWages);
@@ -88,7 +88,7 @@ console.log(`Total Wage Using Reduce :  ${dailyWageEmpArr.reduce(totalWageUsingR
 //Showing the days along with daily wage using array map helper function(UC7b)
 console.log("\nShowing the days along with daily wage using array map helper function");
 let daysCount = 0;
-//Lambda function to map days with daily wage
+//Arrow function to map days with daily wage
 let mapDayWithDailyWage = (dailyWage) => `Day : ${++daysCount} \tTodays's Wage : ${dailyWage}`;
 //Map function used to map each element with days in array
 let daysWithDailyWageMapArr = dailyWageEmpArr.map(mapDayWithDailyWage);
@@ -96,7 +96,7 @@ console.log(daysWithDailyWageMapArr.join("\n"));
 
 //Showing the dayss when full time wage of 160 were earned using filter function(UC7c)
 console.log("\nShowing the dayss when full time wage of 160 were earned using filter function");
-//Lambda function to get full working dayss wages returns if values matches with given value
+//Arrow function to get full working dayss wages returns if values matches with given value
 let getFullTimeWorkDayWages = (dailyWage) => dailyWage.includes("160");
 //Array using filter function to filter the array based on given condition
 let FullWorkDayWagesArr = daysWithDailyWageMapArr.filter(getFullTimeWorkDayWages);
@@ -112,7 +112,7 @@ console.log(FullWorkDayWagesArr.every(getFullTimeWorkDayWages) ? `Every element 
 
 //Checking if there is any part time wages using some(UC7f)
 console.log("\nChecking whether it holds some part time wages");
-//Lambda function to check wages matches parttime wages abd returns if values matches with given value
+//Arrow function to check wages matches parttime wages abd returns if values matches with given value
 let getPartTimeWorkDayWages = (dailyWage) => dailyWage.includes("80");
 console.log(daysWithDailyWageMapArr.some(getPartTimeWorkDayWages) ? `The employee have worked part time wages` : `The Employee doesn't woked part time wages`);
 
@@ -134,9 +134,9 @@ console.log("Total Employee Wage Using Map : " + Array.from(empDailyWageMap.valu
 
 //Using Arrow Functions(UC9)
 let totalHoursUsingMap = Array.from(empDayAndHoursArr.values()).reduce(totalWageUsingReduce, 0)
-let totalWageOfEmpUsingArrow = (dailyWageEmpArr.filter(dailyWage => dailyWage > 0)).reduce(totalWageUsingReduce, 0);
+let totalWageOfEmpUsingArrowFunc = (dailyWageEmpArr.filter(dailyWage => dailyWage > 0)).reduce(totalWageUsingReduce, 0);
 //Using arrow function to find emp total hours and there total wage(UC9a)
-console.log("\nUsed Arrow Function : \nEmpoyee Total hours : " + totalHoursUsingMap + "\nEmpoyee Total Wage: " + totalWageOfEmpUsingArrow);
+console.log("\nUsing Arrow Function \nEmpoyee Total Hours : " + totalHoursUsingMap + "\nEmpoyee Total Wage: " + totalWageOfEmpUsingArrowFunc);
 //Show fulltime, parttime and absent days of employee using arrow function(UC9b)
 console.log("\nShowing Fulltime, Parttime And Absent Days Of Employee Below : ");
 let nonWorkingDays = new Array();
@@ -151,8 +151,30 @@ empDayAndHoursArr.forEach((value, key, map) => {
         nonWorkingDays.push(key);
 })
 console.log("Full Time Working Days " + fullTimeWorkingDays.join(" : "));
-console.log("Part time work Days : " + partTimeWorkingDays.join(" : "));
+console.log("Part Time Working Days : " + partTimeWorkingDays.join(" : "));
 console.log("Non Working Days : " + nonWorkingDays.join(" : "));
 
 //Showing Daily Hours Worked And There Wage Using Array Of Objects(UC10)
 console.log(`Showing Daily Hours Worked And There Wage Using Array Of Objects : \n${empDayWageAndHoursObjArr.join("")}`);
+
+//Perform following object operations using arrow functions(UC11)
+console.log("Calculating total Wage And Total Hours Worked Using Arrow Function On Objects");
+//Total hours using inline arrow functions(UC11a)
+let totalEmpHoursObjArr = empDayWageAndHoursObjArr.filter(dHours => dHours.dailyHours > 0).reduce((tHours, dHours) => tHours += dHours.dailyHours, 0);
+//Total wage using inline arrow functions(UC11a)
+let totalEmpWageObjArr = empDayWageAndHoursObjArr.filter(dWage => dWage.dailyWage > 0).reduce((tWage, dWage) => tWage += dWage.dailyWage, 0);
+console.log("Empoyee Total Hours Using Object : " + totalHoursUsingMap + "\nEmpoyee Total Wage Using Object : " + totalWageOfEmpUsingArrowFunc);
+
+//Showing the full time workings days using foreach(UC11b)
+process.stdout.write("\nShowing The Full Time Workings Days Using Foreach\n");
+empDayWageAndHoursObjArr.filter(dHours => dHours.dailyHours == 8).forEach(dHours => process.stdout.write(dHours.toString()));
+
+//Showing the part time workings days using map and reduce(UC11c)
+process.stdout.write("\nShowing The Part Time Workings Days Using Map By Reducing To String Array\n");
+let partTimeWorkingDayStrArr = empDayWageAndHoursObjArr.filter(dHours => dHours.dailyHours == 4).map(dHours => dHours.dayNum);
+console.log("Part Time Working Days Strings Array : " + partTimeWorkingDayStrArr.join(" || "));
+
+//Showing the full workings days using only map(UC11d)
+process.stdout.write("\nShowing The Non Workings Days Using Only Map\n");
+let nonWorkingDaysNums = empDayWageAndHoursObjArr.filter(dHours => dHours.dailyHours == 0).map(dHours => dHours.dayNum);
+console.log("Non Working Days Of Employee : " + nonWorkingDaysNums.join(" || "));
