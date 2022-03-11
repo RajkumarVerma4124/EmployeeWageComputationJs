@@ -83,7 +83,7 @@ let totalWageUsingReduce = (totalWage, dailyWage) => totalWage + dailyWage;
 dailyWageEmpArr.forEach(sumWages);
 console.log(`Total Wage Using Foreach : ${totalEmpWage}`);
 //Using reduce to traverse the array and print total wage and returning the accumulator
-console.log(`Total Wage Using Reduce :  ${dailyWageEmpArr.reduce(totalWageUsingReduce,0)}`);
+console.log(`Total Wage Using Reduce :  ${dailyWageEmpArr.reduce(totalWageUsingReduce, 0)}`);
 
 //Showing the days along with daily wage using array map helper function(UC7b)
 console.log("\nShowing the days along with daily wage using array map helper function");
@@ -123,7 +123,7 @@ let totalDaysWorked = (numOfDays, dailyWage) => {
         numOfDays++;
     return numOfDays;
 }
-console.log(`Number of dayss employee worked : ${dailyWageEmpArr.reduce(totalDaysWorked,0)}`);
+console.log(`Number of dayss employee worked : ${dailyWageEmpArr.reduce(totalDaysWorked, 0)}`);
 
 //Using map to store days and daily wage along with total wage(UC8)
 console.log("\nStoring days with daily wage using map");
